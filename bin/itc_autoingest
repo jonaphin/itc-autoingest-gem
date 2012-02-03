@@ -2,7 +2,7 @@
 
 require "itc_autoingest"
 
-abort "USAGE #{$0} <username> <password> <vendorid> <report_type> <date_type> <report_subtype> <date_yyyymmdd>" if ARGV.length != 7
+abort "USAGE #{$0} <username> <password> <vendorid> <report_type> <date_type> <report_subtype> <date_yyyymmdd> <apple_identifier>" if ARGV.length != 8
 
 username = ARGV[0]
 password = ARGV[1]
@@ -11,8 +11,9 @@ reporttype = ARGV[3]
 datetype = ARGV[4]
 reportsubtype = ARGV[5]
 reportdate = ARGV[6]
+apple_identifier = ARGV[7]
 
-itca = ITCAutoingest::ITCAutoingest.new(username, password, vendorid)
+itca = ITCAutoingest::ITCAutoingest.new(username, password, vendorid, apple_identifier)
 report = itca.send("#{datetype.downcase}_#{reporttype.downcase}_#{reportsubtype.sub('-', '').downcase}_report", reportdate)
 
 if report[:error].nil?

@@ -14,8 +14,8 @@ module ITCAutoingest
     REPORT_SUB_TYPES = ['Summary', 'Opt-In']
     REPORT_TIMEFRAME = ['Daily', 'Weekly']
 
-    def initialize(username, password, vndnumber)
-      @auth = {:USERNAME => username, :PASSWORD => password, :VNDNUMBER => vndnumber }
+    def initialize(username, password, vndnumber, apple_identifier)
+      @auth = {:USERNAME => username, :PASSWORD => password, :VNDNUMBER => vndnumber, :APPLEIDENTIFIER => apple_identifier}
 
       REPORT_TIMEFRAME.each { |timeframe|
         REPORT_TYPES.each { |report_type|
@@ -55,7 +55,13 @@ module ITCAutoingest
 
       headers = csv_data.shift.map {|i| i.to_s }
       string_data = csv_data.map {|row| row.map {|cell| cell.to_s } }
-      { :report => string_data.map {|row| Hash[*headers.zip(row).flatten] } }
+      string_data.map! {|row| Hash[*headers.zip(row).flatten] }
+      filter_by_apple_identifier(string_data)
+      { :report => string_data }
+    end
+    
+    def filter_by_apple_identifier(string_data)
+      string_data.select!{|item| item["Apple Identifier"] == @auth[:APPLEIDENTIFIER]}
     end
   end
 end
