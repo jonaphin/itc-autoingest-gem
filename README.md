@@ -14,7 +14,7 @@ For more information about ITC reports see this [pdf](http://www.apple.com/itune
 The command line tool uses the following syntax:
 
 ``` text
-itc_autoingest <username> <password> <vendorid> <report type> <date type> <report subtype> <date>
+itc_autoingest <username> <password> <vendorid> <report type> <date type> <report subtype> <date> <appid>
 ```
 * username - your itunes connect username
 * password - your itunes connect password
@@ -23,6 +23,7 @@ itc_autoingest <username> <password> <vendorid> <report type> <date type> <repor
 * date type - there are two date types supported: Daily and Weekly
 * report subtype - there are two subtypes supported: Summary and Opt-In
 * date - the timeframe for the report in yyyymmdd format
+* **optional** appid - the Apple identifier of the item to filter by
 
 The gem has the following methods available:
 
